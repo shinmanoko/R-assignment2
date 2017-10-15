@@ -218,15 +218,15 @@ ptest_d2 <- tibble::as_tibble(ptest2["permuted"])
 
 ggplot2::ggplot(ptest_d1,ggplot2::aes(x=`permuted`)) + 
   ggplot2::geom_histogram(fill="darkblue",color="black") +
-  ggplot2::geom_vline(ggplot2::aes(xintercept=new_test_statistic(iris, "Sepal.Width", "Species", "versicolor","virginica")), lwd=0.5, color="green") +
-  ggplot2::geom_vline(ggplot2::aes(xintercept=new_test_statistic(iris_subset1, "Sepal.Width", "Species", "versicolor","virginica")), lwd=0.5, color="blue") +
-  ggplot2::geom_vline(ggplot2::aes(xintercept=new_test_statistic(iris_subset2, "Sepal.Width", "Species", "versicolor","virginica")), lwd=0.5, color="red") + ggplot2::xlim(c(-0.6,0.6))
+  ggplot2::geom_vline(ggplot2::aes(xintercept=difference_in_medians(iris, "Sepal.Width", "Species", "versicolor","virginica")), lwd=0.5, color="green") +
+  ggplot2::geom_vline(ggplot2::aes(xintercept=difference_in_medians(iris_subset1, "Sepal.Width", "Species", "versicolor","virginica")), lwd=0.5, color="blue") +
+  ggplot2::geom_vline(ggplot2::aes(xintercept=difference_in_medians(iris_subset2, "Sepal.Width", "Species", "versicolor","virginica")), lwd=0.5, color="red") + ggplot2::xlim(c(-0.6,0.6))
 
 ggplot2::ggplot(ptest_d2,ggplot2::aes(x=`permuted`)) + 
   ggplot2::geom_histogram(fill="darkred",color="black") +
-  ggplot2::geom_vline(ggplot2::aes(xintercept=new_test_statistic(iris, "Sepal.Width", "Species", "versicolor","virginica")), lwd=0.5, color="green") +
-  ggplot2::geom_vline(ggplot2::aes(xintercept=new_test_statistic(iris_subset1, "Sepal.Width", "Species", "versicolor","virginica")), lwd=0.5, color="blue") +
-  ggplot2::geom_vline(ggplot2::aes(xintercept=new_test_statistic(iris_subset2, "Sepal.Width", "Species", "versicolor","virginica")), lwd=0.5, color="red") + ggplot2::xlim(c(-0.6,0.6))
+  ggplot2::geom_vline(ggplot2::aes(xintercept=difference_in_medians(iris, "Sepal.Width", "Species", "versicolor","virginica")), lwd=0.5, color="green") +
+  ggplot2::geom_vline(ggplot2::aes(xintercept=difference_in_medians(iris_subset1, "Sepal.Width", "Species", "versicolor","virginica")), lwd=0.5, color="blue") +
+  ggplot2::geom_vline(ggplot2::aes(xintercept=difference_in_medians(iris_subset2, "Sepal.Width", "Species", "versicolor","virginica")), lwd=0.5, color="red") + ggplot2::xlim(c(-0.6,0.6))
 ```
 <br/><br/>
 It can be noticed that in both graph, the defference between two species become large (with less data around 0.0) and a lot more concentrate, as we select some data of a certain range of the original dataset instead of it all. With a central part missing, while remained bars of the second subdataset keep a similar shape with the origianl one, those of the first subdataset distribute in a more  dispersed way on the x axis.<br/>
