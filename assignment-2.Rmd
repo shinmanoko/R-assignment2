@@ -135,7 +135,7 @@ print(ptest_3[["observed"]])
 It matters, because as we have defined the permutation function like `d[[var]] <- sample(d[[var]], nrow(d))`, it will only change the order of elements in the column indicated by `var`. If we use the `grouping_var` instead, the data not in the column "Sepal.Width", but in the column "Condition" will get permuted.<br/>
 Therefore, when we change the argument of *randomize* function from *var* to *grouping_var*, the difference can be seen in the result numbers. And if we do so, maybe the permutation won't be as well as that using "Sepal.Width".<br/>
 <br/>
-But this kind of difference in result here seems won't obstruct us much from drawing a correct conclusion. Wheather permute var or grouping_var, as long as the sample are large enouugh, the distributions are quite cloth. <br/>
+But this kind of difference in result here seems won't obstruct us much from drawing a correct conclusion. Wheather permute var or grouping_var, as long as the sample are large enouugh, the distributions are quite close. <br/>
 <br/>
 
 ### e. Plotting the sampling distribution
