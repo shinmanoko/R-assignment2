@@ -132,10 +132,10 @@ print(ptest_3[["observed"]])
 
 ### d. Does it matter for your permutation test whether you permute var or grouping_var? 
 <br/>
-It matters, because as we have defined the permutation function like `d[[var]] <- sample(d[[var]], nrow(d))`, it will only change the order of elements in the column indicated by `var`. If we use the `grouping_var` instead, the data not in the column "Sepal.Width", but in the column "Condition" will get permuted.<br/>
-Therefore, when we change the argument of *randomize* function from *var* to *grouping_var*, the difference can be seen in the result numbers. And if we do so, maybe the permutation won't be as well as that using "Sepal.Width".<br/>
+It matters, because as we have defined the permutation function using `d[[var]] <- sample(d[[var]], nrow(d))`, it will only change the order of elements in the column indicated by `var`. If we use the `grouping_var` instead, not data in the column "Sepal.Width", but those in the column "Condition" will be permuted then.<br/>
+Therefore, when we change an argument of *randomize* function from *var* to *grouping_var*, the difference can be seen in the result. And it's possible that when we do so, the permutation maybe won't be as well as when we select "Sepal.Width" to permute.<br/>
 <br/>
-But this kind of difference in result here seems won't obstruct us much from drawing a correct conclusion. Wheather permute var or grouping_var, as long as the sample are large enouugh, the distributions are quite close. <br/>
+But this kind of difference in permutation result here seems won't obstruct us much from drawing a correct conclusion. Permuting wheather var or grouping_var, as long as the sample is large enough, their distribution can be quite close. <br/>
 <br/>
 
 ### e. Plotting the sampling distribution
@@ -157,9 +157,9 @@ ggplot2::ggplot(ptest_d, ggplot2::aes(x=`permuted`)) +
 ggplot2::geom_histogram(bins=30, fill="grey", colour="black") + ggplot2::geom_vline(ggplot2::aes(xintercept=difference_in_medians(iris, "Sepal.Width", "Species", "versicolor","virginica")), lwd=0.5, color="green")
 ```
 <br/><br/>
-In the graph, it's clear eo see the difference between 2 the two datasets : at -0.2 is the difference of mediens of each group in the original iris dataset, which means between the two species of iris, their "Sepal Width" differ generally 0.2cm; while, with distribution presented by histogram, this difference in the permuted data set have both its mode and medien at 0.0, which means the two groups can be considered as the same.
+In this graph, it's clear to see that the difference between the two datasets : at -0.2 is the difference of mediens of each group in the original iris dataset, which means that between the two species of iris, their "Sepal Width" have generally a difference of 0.2cm; while, with distribution presented by histogram, this difference in the permuted dataset who has both its mode and medien at 0.0 is negligible (which means the two groups can be considered as the same).
 <br/>
-Therefore, we can say that in the original data set, the two species are not the same in "Sepal Width".<br/>
+Therefore, we can say that in the original dataset, the two species are not the same on "Sepal Width".<br/>
 <br/>
 
 ### f. Test statistics
@@ -178,8 +178,8 @@ ggplot2::ggplot(ptest_d,ggplot2::aes(x=`permuted`)) +
   ggplot2::geom_vline(ggplot2::aes(xintercept=new_test_statistic(iris, "Sepal.Width", "Species", "versicolor","virginica")), lwd=0.5, color="yellow")
 ```
 <br/><br/>
-Here we construct a new test statistic function who calculate the difference in means of two groups of flowers. The new line and distribution histogram dose not differ much from those of difference in mediens: only the line move slightly to the left. <br/>
-This can be explained by the fact that the distribution of data examples could lead to a difference between the medien and mean.<br/>
+Here we construct a new test statistic function who calculate the difference in means of our two groups of flowers. The new line and distribution histogram dose not differ much from those of original one showing the difference in mediens: only the line move slightly to the left. <br/>
+This can be explained by the fact that the distribution of iris'sepal width could have a quite close forme on mediens or on means.<br/>
 In general, the two test statistic functions give us a similar anwser supporting the *Hypothesis B*. <br/>
 <br/>
 
@@ -192,10 +192,9 @@ permutation_pvalue_left(ptest)
 <br/><br/>
 Let's take the example of *the height of a group of high school studients, where there are girls and boys*.<br/>
 <br/>
-We'd predict that the difference in the medians statistic would be extreme on the right
-side if our **Hypothesis B** were that *the height of studients of different gender follows different distribution : boys are usually higher than girls. So for calculating the difference in mediens, we subtract the boys' by the girls'*.<br/>
+We'd predict that the difference in the medians statistic would be extreme on the right side if our **Hypothesis B** were that *the height of studients of different genders but same age follows different distribution : boys are usually higher than girls. Then for calculating the difference in mediens, we subtract the boys' by the girls'*.<br/>
 <br/>
-In which case, we would use the function `permutation_pvalue_right`, because when the value is extreme on the right (in another word, in the positive direction), we will observe a extremely small number as result of this function.<br/>
+In which case, we would use the function `permutation_pvalue_right`, because *when the value is extreme on the right (in other words, in the positive direction), we will observe a extremely small number as result of this function*.<br/>
 <br/>
 
 ### h. Writing a more generic function of the randomization function
@@ -229,12 +228,12 @@ ggplot2::ggplot(ptest_d2,ggplot2::aes(x=`permuted`)) +
   ggplot2::geom_vline(ggplot2::aes(xintercept=difference_in_medians(iris_subset2, "Sepal.Width", "Species", "versicolor","virginica")), lwd=0.5, color="red") + ggplot2::xlim(c(-0.6,0.6))
 ```
 <br/><br/>
-It can be noticed that in both graph, the defference between two species become large (with less data around 0.0) and a lot more concentrate, as we select some data of a certain range of the original dataset instead of it all. With a central part missing, while remained bars of the second subdataset keep a similar shape with the origianl one, those of the first subdataset distribute in a more  dispersed way on the x axis.<br/>
+It can be noticed that in both graphs, the defference between two species becomes larger (with less data around 0.0) and a lot more concentrate (with taller bars), as we select some data of a certain range of the original dataset instead of it all. Also with a central part missing, while remained bars of the second subdataset keep still a quite similar shape with the origianl one, those of the first subdataset distribute in a more dispersed way on the x axis.<br/>
 <br/>
-A second notation is in regard to the position of vertical lines, which all at the left side of the whole data points tell that the subtraction would more like to get a negtive value before permutation. The full dataset and its subdataset2 have a close value, but become quite extreme with the subdataset 2 which has selected data form rows between from 89th to 94th and from 108th to 112th. As the range is smaller, it concains less data values thus can lead to a deviation.<br/>
+A second notation is in regard to the position of vertical lines, which all at the left side of the whole data points tell that the subtraction would more likely to get a negtive value before permutation. The full dataset and its subdataset2 have a closer value, which becomes ranther more extreme with the subdataset 2 which data have been collected from 89th to 94th rows and from 108th to 112th rows. As the range is smaller, it contains less data values and thus got a larger deviation.<br/>
 <br/>
-After all permutation test above we can be pretty sure that these data are belong to two sepecies of iris, rather than a sigular. <br/>
-For the level of etremeness, although the “fairly extreme” line with subdataset1, its result is not that representive (not as well as the original or subdataset2) as this one contains only a quite small dataset. So we can still believe that they are not so extremely different.<br/>
+After all permutation test above, we can be pretty sure that these data are belong to two sepecies of iris, rather than one same category. <br/>
+Regarding to the level of etremeness, in spite of the “fairly extreme” line with subdataset1, its result is not that representive (not as well as the original or subdataset2) as this one contains only a quite small quentity of data. So we can still believe in the conclusion that they are not that extremely different.<br/>
 <br/>
 <br/>
 <br/>
